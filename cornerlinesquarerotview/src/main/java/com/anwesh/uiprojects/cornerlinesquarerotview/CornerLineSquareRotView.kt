@@ -32,7 +32,7 @@ fun Float.updateScale(dir : Float, a : Int, b : Int) : Float = mirrorValue(a, b)
 fun Canvas.drawCLSRNode(i : Int, scale : Float, paint : Paint) {
     val w : Float = width.toFloat()
     val h : Float = height.toFloat()
-    val gap : Float = w / (nodes + 1)
+    val gap : Float = h / (nodes + 1)
     val sc1 : Float = scale.divideScale(0, 2)
     val sc2 : Float = scale.divideScale(1, 2)
     val size : Float = gap / sizeFactor
@@ -40,7 +40,7 @@ fun Canvas.drawCLSRNode(i : Int, scale : Float, paint : Paint) {
     paint.strokeWidth = Math.min(w, h) / strokeFactor
     paint.strokeCap = Paint.Cap.ROUND
     save()
-    translate(gap * (i + 1), h / 2)
+    translate(w /2, gap * (i + 1))
     rotate(90f * sc2)
     for (j in 0..(lines - 1)) {
         val sc : Float = sc1.divideScale(j, lines)
