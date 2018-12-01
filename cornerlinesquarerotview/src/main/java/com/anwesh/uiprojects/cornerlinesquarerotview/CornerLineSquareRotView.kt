@@ -167,5 +167,27 @@ class CornerLineSquareRotView(ctx : Context) : View(ctx) {
             return this
         }
     }
+
+    data class CornerLineSquareRot(var i : Int, var dir : Int = 1, val root : CLSRNode = CLSRNode(0)) {
+
+        private var curr : CLSRNode = root
+
+        fun draw(canvas : Canvas, paint : Paint) {
+            root.draw(canvas, paint)
+        }
+
+        fun update(cb : (Int, Float) -> Unit) {
+            curr.update {i, scl ->
+                curr = curr.getNext(dir) {
+                    dir *= -1
+                }
+                cb(i, scl)
+            }
+        }
+
+        fun startUpdating(cb : () -> Unit) {
+            curr.startUpdating(cb)
+        }
+    }
 }
 
