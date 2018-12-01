@@ -189,5 +189,28 @@ class CornerLineSquareRotView(ctx : Context) : View(ctx) {
             curr.startUpdating(cb)
         }
     }
+
+    data class Renderer(var view : CornerLineSquareRotView) {
+
+        private val clsr : CornerLineSquareRot = CornerLineSquareRot(0)
+
+        private val animator : Animator = Animator(view)
+
+        fun render(canvas : Canvas, paint : Paint) {
+            canvas.drawColor(Color.parseColor("#BDBDBD"))
+            clsr.draw(canvas, paint)
+            animator.animate {
+                clsr.update {i, scl ->
+                    animator.stop()
+                }
+            }
+        }
+
+        fun handleTap() {
+            clsr.startUpdating {
+                animator.start()
+            }
+        }
+    }
 }
 
