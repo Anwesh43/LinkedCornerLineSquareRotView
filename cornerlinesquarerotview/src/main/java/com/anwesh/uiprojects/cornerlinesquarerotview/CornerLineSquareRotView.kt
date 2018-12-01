@@ -34,7 +34,7 @@ fun Canvas.drawCLSRNode(i : Int, scale : Float, paint : Paint) {
     val h : Float = height.toFloat()
     val gap : Float = w / (nodes + 1)
     val sc1 : Float = scale.divideScale(0, 2)
-    val sc2 : Float = scale.divideScale(0, 2)
+    val sc2 : Float = scale.divideScale(1, 2)
     val size : Float = gap / sizeFactor
     paint.color = color
     paint.strokeWidth = Math.min(w, h) / strokeFactor
@@ -50,7 +50,7 @@ fun Canvas.drawCLSRNode(i : Int, scale : Float, paint : Paint) {
             save()
             translate(size, size)
             rotate(90f * k)
-            drawLine(0f, 0f, -(size/3) * sc, 0f, paint)
+            drawLine(0f, 0f, -(size/2) * sc, 0f, paint)
             restore()
         }
         restore()
@@ -144,7 +144,7 @@ class CornerLineSquareRotView(ctx : Context) : View(ctx) {
 
         fun draw(canvas : Canvas, paint : Paint) {
             canvas.drawCLSRNode(i, state.scale, paint)
-            next?.draw(canvas, paint)
+            prev?.draw(canvas, paint)
         }
 
         fun update(cb : (Int, Float) -> Unit) {
@@ -170,12 +170,12 @@ class CornerLineSquareRotView(ctx : Context) : View(ctx) {
         }
     }
 
-    data class CornerLineSquareRot(var i : Int, var dir : Int = 1, val root : CLSRNode = CLSRNode(0)) {
+    data class CornerLineSquareRot(var i : Int, var dir : Int = 1)  {
 
-        private var curr : CLSRNode = root
+        private var curr : CLSRNode = CLSRNode(0)
 
         fun draw(canvas : Canvas, paint : Paint) {
-            root.draw(canvas, paint)
+            curr.draw(canvas, paint)
         }
 
         fun update(cb : (Int, Float) -> Unit) {
