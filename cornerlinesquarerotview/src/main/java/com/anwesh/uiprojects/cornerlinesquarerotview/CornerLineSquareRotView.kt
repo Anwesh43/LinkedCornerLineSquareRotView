@@ -214,5 +214,13 @@ class CornerLineSquareRotView(ctx : Context) : View(ctx) {
             }
         }
     }
+
+    companion object {
+        fun create(activity: Activity) : CornerLineSquareRotView {
+            val view : CornerLineSquareRotView = CornerLineSquareRotView(activity)
+            activity.setContentView(view)
+            return view 
+        }
+    }
 }
 
